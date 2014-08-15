@@ -77,6 +77,7 @@ public class PuzzleBoard {
                 break;
 
             case OCCUPIED:
+                /*Delete position*/
                 positionsX[y]=0;
                 positionsY[x]=0;
                 if(x<=y){
