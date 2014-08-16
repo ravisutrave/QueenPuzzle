@@ -11,8 +11,8 @@ public class Game extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         puzBoard = new board(this);
-        setContentView(puzBoard);    }
-
+        setContentView(puzBoard);
+    }
 
 
 }
