@@ -41,12 +41,16 @@ public class PuzzleBoard {
     public QueenPosition is_valid_position(int x, int y) {
         /*No loops here. Its O(1)!!*/
         if (x >= size_of_board || y >= size_of_board || x < 0 || y < 0) {
+            /* Outside board!! Return invalid*/
             return QueenPosition.INVALID;
         } else if (positionsX[y] == x + 1 || positionsY[x] == y + 1) {
+            /*Oh! already occupied. still invalid*/
             return QueenPosition.OCCUPIED;
         } else if (positionsX[y] > 0 || positionsY[x] > 0 ||
                 (x <= y && positionsLeft[y - x]) || (x > y && positionsLeft2[x - y]) ||
                 (x + y >= (size_of_board - 1) && positionsRight[x + y - size_of_board + 1]) || (x + y < (size_of_board - 1) && positionsRight2[x + y])) {
+            /*This is tricky. positionsLeft and positionsRight are used to make this function run in O(1) using O(n) memory
+            * This actually test if there are any queens already placed diagonally to current position */
             return QueenPosition.INVALID;
         }
         return QueenPosition.VALID;
