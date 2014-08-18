@@ -27,7 +27,7 @@ public class board extends View {
         paint.setColor(Color.rgb(51, 0, 0));
         paint_green.setColor(Color.GREEN);
         paint_red.setColor(Color.RED);
-        size_of_board = 5;
+        size_of_board = 4;
         queen_board = new PuzzleBoard(size_of_board);
 
     }
@@ -67,37 +67,30 @@ public class board extends View {
     public void onDraw(Canvas canvas) {
         int rectWidth = viewWidth / size_of_board;
         int rectHeight = rectWidth;
+        float radius = (rectWidth * 3) / 8;
 
         for (int i = 0; i < size_of_board; i++) {
-            if (i % 2 == 0) {
-                for (int j = 0; j < ((int) Math.ceil(size_of_board / 2.0)); j++) {
-                    canvas.drawRect(rectWidth * 2 * j, rectHeight * i, rectWidth * 2 * j + rectWidth, rectHeight * i + rectHeight, paint);
-                }
-            } else {
-                for (int j = 0; j < size_of_board / 2; j++) {
-                    canvas.drawRect(rectWidth * 2 * j + rectWidth, rectHeight * i, rectWidth * 2 * j + rectWidth + rectWidth, rectHeight * i + rectHeight, paint);
-                }
-            }
-        }
-        float radius = (rectWidth - 20) / 2;
-        for (int i = 0; i < size_of_board; i++) {
             for (int j = 0; j < size_of_board; j++) {
+                if (i % 2 == 0) {
+                    canvas.drawRect(rectWidth * i + (rectWidth * (j % 2)), rectHeight * j, rectWidth * i + rectWidth + (rectWidth * (j % 2)), rectHeight * j + rectHeight, paint);
+                }
                 QueenPosition pos = queen_board.is_valid_position(i, j);
                 if (pos == QueenPosition.OCCUPIED) {
-                    canvas.drawCircle((rectWidth * i) + 10 + radius, (rectHeight * j) + 10 + radius, radius, paint_green);
+                    canvas.drawCircle((rectWidth * (i + 1.0f / 8)) + radius, (rectHeight * (j + 1.0f / 8)) + radius, radius, paint_green);
                 } else if (pos != QueenPosition.VALID) {
-                    canvas.drawRect((rectWidth * i) + 10, (rectHeight * j) + 10, rectWidth * i + rectWidth - 10, rectHeight * j + rectHeight - 10, paint_red);
+                    canvas.drawRect((rectWidth * (i + 1.0f / 8)), (rectHeight * (j + 1.0f / 8)), rectWidth * (i + (7.0f / 8)), rectHeight * (j + (7.0f / 8)), paint_red);
                 }
             }
         }
         if (queen_board.state == BoardState.WON) {
             Log.d(getClass().getName(), "You Won!!");
-            if (size_of_board < 20) {
-                size_of_board++;
-                queen_board.state = BoardState.RE_INIT;
-                queen_board.resetBoard(size_of_board);
-                invalidate();
-            }
+            /*TODO add multiple stages for each board size
+            * By randomly placing 1 or more queens initially*/
+            size_of_board++;
+            queen_board.state = BoardState.RE_INIT;
+            queen_board.resetBoard(size_of_board);
+            invalidate();
         }
+
     }
 }

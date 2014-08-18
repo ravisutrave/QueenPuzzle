@@ -39,6 +39,7 @@ public class PuzzleBoard {
     }
 
     public QueenPosition is_valid_position(int x, int y) {
+        /*No loops here. Its O(1)!!*/
         if (x >= size_of_board || y >= size_of_board || x < 0 || y < 0) {
             return QueenPosition.INVALID;
         } else if (positionsX[y] == x + 1 || positionsY[x] == y + 1) {
